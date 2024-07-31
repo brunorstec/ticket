@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel Administrativo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-image: url('{{ url_for('static', filename='images/background1.jpg') }}');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body>
+    <header class="header-bar">
+        <h1>Painel Administrativo</h1>
+    </header>
+    <a href="{{ url_for('logout') }}" class="button">Logout</a>
+    <div class="dashboard-container">
+        <table class="dashboard-table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Departamento</th>
+                    <th>Unidade</th>
+                    <th>Telefone</th>
+                    <th>Status</th>
+                    <th>Data de Abertura</th>
+                    <th>Prioridade</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in range(calls|length) %}
+                <tr>
+                    <td>{{ calls[i][0] }}</td>
+                    <td>{{ calls[i][1] }}</td>
+                    <td>{{ calls[i][2] }}</td>
+                    <td>{{ calls[i][3] }}</td>
+                    <td class="{% if calls[i][5] == 'Aberto' %}status-open{% elif calls[i][5] == 'Em andamento' %}status-in-progress{% else %}status-closed{% endif %}">
+                        {{ calls[i][5] }}
+                    </td>
+                    <td>{{ calls[i][6] }}</td>
+                    <td>{{ calls[i][7] }}</td>
+                    <td>
+                        <button class="expand-button" onclick="toggleDetails({{ i }})">Expandir</button>
+                        <div id="details-{{ i }}" class="details" style="display: none;">
+                            <p><strong>Descrição:</strong> {{ calls[i][4] }}</p>
+                            <form action="{{ url_for('dashboard') }}" method="post">
+                                <input type="hidden" name="row_id" value="{{ i }}">
+                                <label for="status">Status:</label>
+                                <select name="status">
+                                    <option value="Aberto" {% if calls[i][5] == 'Aberto' %}selected{% endif %}>Aberto</option>
+                                    <option value="Em andamento" {% if calls[i][5] == 'Em andamento' %}selected{% endif %}>Em andamento</option>
+                                    <option value="Fechado" {% if calls[i][5] == 'Fechado' %}selected{% endif %}>Fechado</option>
+                                </select>
+                                <input type="submit" value="Atualizar">
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script>
+        function toggleDetails(index) {
+            var details = document.getElementById('details-' + index);
+            if (details.style.display === 'none') {
+                details.style.display = 'block';
+            } else {
+                details.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

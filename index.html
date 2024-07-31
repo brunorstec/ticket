@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Portal de Chamados</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-image: url('{{ url_for('static', filename='images/background.jpg') }}');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-bar">
+            <h1 style="font-family: 'Arial', sans-serif;">Portal de Chamados</h1>
+            <h2 style="font-family: 'Times New Roman', serif;">Secretaria Municipal de Saúde - Silvânia-GO</h2>
+        </div>
+    </header>
+    <div class="form-container">
+        <form action="{{ url_for('submit') }}" method="post">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required>
+
+            <label for="departamento">Departamento:</label>
+            <input type="text" id="departamento" name="departamento" required>
+
+            <label for="unidade">Unidade:</label>
+            <select id="unidade" name="unidade" required>
+                <option value="ESF1">ESF1</option>
+                <option value="ESF2">ESF2</option>
+                <option value="ESF3">ESF3</option>
+                <option value="ESF4">ESF4</option>
+                <option value="ESF5">ESF5</option>
+                <option value="ESF6">ESF6</option>
+                <option value="ESF7">ESF7</option>
+                <option value="ESF8">ESF8</option>
+                <option value="Hospital Nosso Senhor do Bonfim">Hospital Nosso Senhor do Bonfim</option>
+                <option value="Secretaria Municipal de Saúde">Secretaria Municipal de Saúde</option>
+                <option value="SAMU">SAMU</option>
+                <option value="CAPS">CAPS</option>
+                <option value="EMAD">EMAD</option>
+                <option value="Laboratório Nosso Senhor do Bonfim">Laboratório Nosso Senhor do Bonfim</option>
+                <option value="Secretaria de Meio Ambiente">Secretaria de Meio Ambiente</option>
+            </select>
+
+            <label for="telefone">Telefone:</label>
+            <input type="tel" id="telefone" name="telefone" required>
+
+            <label for="descricao">Descrição:</label>
+            <textarea id="descricao" name="descricao" rows="4" required></textarea>
+
+            <input type="submit" value="Enviar">
+        </form>
+    </div>
+</body>
+</html>
